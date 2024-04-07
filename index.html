@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+  <head>
+    <title>大米 SU8</title>
+  </head>
+  <body>
+    <script>
+      async function main() {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        })
+        const audio = document.createElement('audio')
+        audio.autoplay = true
+        audio.srcObject = stream
+      }
+      main()
+    </script>
+  </body>
+</html>
