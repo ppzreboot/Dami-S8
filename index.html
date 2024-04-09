@@ -4,16 +4,52 @@
     <title>大米 SU8</title>
   </head>
   <body>
+    <button class="microphone"></button>
+    <button class="accompany"></button>
     <script>
-      async function main() {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        })
-        const audio = document.createElement('audio')
-        audio.autoplay = true
-        audio.srcObject = stream
+      init_microphone()
+
+      const get_audio_ctx = new function() {
+        let ctx
+        return () => ctx ||= new AudioContext()    
       }
-      main()
+
+      function init_microphone() {
+        const btn = document.querySelector('button.microphone')
+        const Disabled = 0, Enabled = 1
+        const map_label = {
+          [Disabled]: '开启麦克风',
+          [Enabled]: '关闭麦克风',
+        }
+
+        let status = Disabled
+        btn.innerHTML = map_label[status]
+
+        let media_stream, audio_node
+        btn.addEventListener('click', async () => {
+          const ctx = get_audio_ctx()
+          switch (status) {
+            case Disabled:
+              console.log('请求权限...')
+              media_stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+              console.log('权限请求成功')
+              audio_node = ctx.createMediaStreamSource(media_stream)
+              audio_node.connect(ctx.destination)
+              status = Enabled
+              console.log('麦克风已开启')
+              break
+            case Enabled:
+              audio_node.disconnect()
+              media_stream.getTracks().forEach(t => t.stop())
+              status = Disabled
+              console.log('麦克风已关闭')
+              break
+          }
+          btn.innerHTML = map_label[status]
+        })
+        document.body.appendChild(btn)
+      }
+
     </script>
   </body>
 </html>
