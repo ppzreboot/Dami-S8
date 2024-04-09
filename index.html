@@ -4,11 +4,61 @@
     <meta charset="utf8">
     <title>大米 SU8</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0 12px;
+      }
+      @media (min-width: 768px) {
+        html {
+          background-color: rgba(0,0,0, .05);
+        }
+        body {
+          width: 888px;
+          height: 100vh;
+          margin: 0 auto;
+          padding: 0 100px;
+          background-color: rgba(255,255,255, .9);
+        }
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem 0;
+      }
+      h1 {
+        margin: 0;
+      }
+      main {
+        margin-top: 30vh;
+      }
+      button {
+        display: block;
+        margin: 1rem auto;
+        width: 200px;
+        height: 3rem;
+        font-size: inherit;
+        background: transparent;
+        outline: none;
+        border: .5px solid rgba(0,0,0, .1);
+        border-radius: 8px;
+      }
+      button:active {
+        opacity: .6;
+      }
+    </style>
   </head>
   <body>
-    <button class="microphone"></button>
-    <button class="accompany">选择伴奏</button>
-    <a href="https://github.com/ppzreboot/Dami-SU8">源码</a>
+    <header>
+      <h1>大米 SU8</h1>
+      <a href="https://github.com/ppzreboot/Dami-SU8">源码</a>
+    </header>
+
+    <main>
+      <button class="microphone"></button>
+      <button class="accompany">选择伴奏</button>
+    </main>
+
     <script>
       init_microphone()
       init_accompany()
