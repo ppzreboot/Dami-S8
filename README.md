@@ -14,4 +14,4 @@
 ---
 
 `Dami SU8` 是一款 KEV (Ktv in Electric Vehicles) 的 WebAPP。
-打开网站、连接车载蓝牙，就能用。
+[打开网站](https://ppzreboot.github.io/Dami-SU8/)、连接车载蓝牙、选择伴奏、你就是麦霸。
