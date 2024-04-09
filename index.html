@@ -5,9 +5,10 @@
   </head>
   <body>
     <button class="microphone"></button>
-    <button class="accompany"></button>
+    <button class="accompany">选择伴奏</button>
     <script>
       init_microphone()
+      init_accompany()
 
       const get_audio_ctx = new function() {
         let ctx
@@ -50,6 +51,39 @@
         document.body.appendChild(btn)
       }
 
+      function init_accompany() {
+        const btn = document.querySelector('button.accompany')
+        const file_input = document.createElement('input')
+        file_input.type = 'file'
+        btn.onclick = () => file_input.click()
+
+        let audio_source
+        file_input.addEventListener('change', evt => {
+          const file = evt.target.files[0]
+          if (!file) return
+
+          if (audio_source) {
+            console.log('停止上一首...')
+            audio_source.stop()
+            audio_source.disconnect()
+            console.log('上一首已停止')
+          }
+
+          const ctx = get_audio_ctx()
+          const reader = new FileReader()
+          reader.onload = evt => {
+            console.log('file loaded')
+            ctx.decodeAudioData(evt.target.result, buffer => {
+              console.log('audio file decoded')
+              audio_source = ctx.createBufferSource()
+              audio_source.buffer = buffer
+              audio_source.connect(ctx.destination)
+              audio_source.start(0)
+            })
+          }
+          reader.readAsArrayBuffer(file)
+        })
+      }
     </script>
   </body>
 </html>
